@@ -3,7 +3,7 @@
 
 MovieFinder is a simple and elegant web application that allows users to search for movies, view detailed information, and watch trailers — all using the OMDB API.
 
-![MovieFinder Screenshot](./assets/bg.jpg)
+![MovieFinder Screenshot](./assests/landing-preview.png)
 
 ## 🚀 Features
 
@@ -70,7 +70,7 @@ MovieFinder is a simple and elegant web application that allows users to search 
 
 ## 🌐 Live Demo
 
-> 🔗 [https://your-username.github.io/moviefinder](https://your-username.github.io/moviefinder)
+> 🔗 [https://your-username.github.io/moviefinder](https://b-acharekar.github.io/movie-finder/)
 
 ---
 
