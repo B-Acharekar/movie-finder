@@ -53,15 +53,13 @@ MovieFinder is a simple and elegant web application that allows users to search 
 ### 🔹 Movie Details
 ![Movie Details](./assets/details-preview.png)
 
-> *(You can add screenshots manually and replace these filenames)*
-
 ---
 
 ## 🔧 Setup Instructions
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/your-username/moviefinder.git
+   git clone https://github.com/b-Acharekar/moviefinder.git
    cd moviefinder
 
 2. **Open `index.html` in your browser** or deploy using GitHub Pages.
@@ -70,7 +68,7 @@ MovieFinder is a simple and elegant web application that allows users to search 
 
 ## 🌐 Live Demo
 
-> 🔗 [https://your-username.github.io/moviefinder](https://b-acharekar.github.io/movie-finder/)
+> 🔗 [https://b-Acharekar.github.io/moviefinder](https://b-acharekar.github.io/movie-finder/)
 
 ---
 
