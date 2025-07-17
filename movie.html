@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Movie Details | MovieFinder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/942/942748.png" />
+  <style>
+    [data-theme="dark"] {
+      background-color: #0f172a;
+      color: #fff;
+    }
+  </style>
+</head>
+<body class="font-sans min-h-screen bg-gradient-to-br from-slate-900 to-slate-800 text-white">
+
+  <!-- Header -->
+  <header class="w-full text-center py-6 border-b border-slate-700 shadow-sm mb-6">
+    <h1 class="text-4xl font-extrabold text-blue-400 tracking-tight">🎥 Movie Details</h1>
+  </header>
+
+  <!-- Movie Details -->
+  <main class="max-w-6xl mx-auto px-6 pb-20" data-aos="fade-up">
+    <div id="movieDetails" class="bg-[#1e293b]/90 border border-slate-700 rounded-2xl shadow-xl p-6 flex flex-col md:flex-row gap-6"></div>
+
+    <!-- YouTube Trailer -->
+    <div id="trailerContainer" class="mt-10"></div>
+  </main>
+
+  <!-- Back to Top Button -->
+  <button onclick="window.scrollTo({top: 0, behavior: 'smooth'})"
+    class="fixed bottom-6 right-6 bg-blue-600 text-white p-3 rounded-full shadow-lg hover:bg-blue-700 transition">
+    ⬆️
+  </button>
+
+  <!-- Script -->
+  <script>
+    const imdbID = new URLSearchParams(window.location.search).get("id");
+    const movieDetailsDiv = document.getElementById("movieDetails");
+    const trailerContainer = document.getElementById("trailerContainer");
+
+    // Fetch movie data from OMDb
+    fetch(`https://www.omdbapi.com/?i=${imdbID}&apikey=60a7eb8d`)
+      .then(res => res.json())
+      .then(data => {
+        const poster = data.Poster !== "N/A" ? data.Poster : "https://via.placeholder.com/300x450";
+        const rating = data.imdbRating !== "N/A" ? `⭐ ${data.imdbRating}` : "";
+        const trailerQuery = `${data.Title} Official Trailer`;
+
+        // Render movie details
+        movieDetailsDiv.innerHTML = `
+          <img src="${poster}" alt="${data.Title}" class="w-full md:w-60 rounded-xl shadow-lg" />
+          <div class="flex-1">
+            <h2 class="text-3xl font-bold mb-2">${data.Title} <span class="text-gray-400">(${data.Year})</span></h2>
+            <p><strong>Genre:</strong> ${data.Genre}</p>
+            <p><strong>Director:</strong> ${data.Director}</p>
+            <p><strong>Actors:</strong> ${data.Actors}</p>
+            <p><strong>Language:</strong> ${data.Language}</p>
+            <p><strong>Released:</strong> ${data.Released}</p>
+            <p><strong>Runtime:</strong> ${data.Runtime}</p>
+            ${rating ? `<div class="mt-2 inline-block bg-yellow-400 text-black px-3 py-1 rounded-full font-semibold">${rating}</div>` : ""}
+            <p class="mt-4 text-gray-300"><strong>Plot:</strong> ${data.Plot}</p>
+            <a href="search.html" class="inline-block mt-6 text-blue-400 hover:underline transition">← Back to Search</a>
+          </div>
+        `;
+
+        // Embed YouTube trailer
+        fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(trailerQuery)}&key=AIzaSyD-samplekey&type=video&maxResults=1`)
+          .then(res => res.json())
+          .then(trailerData => {
+            const videoId = trailerData.items?.[0]?.id?.videoId;
+            if (videoId) {
+              trailerContainer.innerHTML = `
+                <h3 class="text-2xl font-bold mb-4 text-blue-300">🎬 Official Trailer</h3>
+                <div class="aspect-video w-full rounded-xl overflow-hidden shadow-lg">
+                  <iframe class="w-full h-full" src="https://www.youtube.com/embed/${videoId}" frameborder="0" allowfullscreen></iframe>
+                </div>
+              `;
+            }
+          })
+          .catch(err => {
+            console.warn("Trailer fetch failed", err);
+          });
+      });
+  </script>
+
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>AOS.init();</script>
+</body>
+</html>
